@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 
+from __future__ import print_function
 import os
 from os import path
 import sys
@@ -385,16 +386,16 @@ else:
 m_secs_ = php_str_pad(secs_, 2, "0", STR_PAD_LEFT)
 pass
 
-# Output HTML
-start_response('200 OK', [('Content-Type', 'text/html; charset=utf-8')])
+    # Output HTML
+    start_response('200 OK', [('Content-Type', 'text/html; charset=utf-8')])
 
-html_content = f"""
+    html_content = f"""
     <!DOCTYPE html>
     <html>
     <head>
     <title>{title_} (Match Result)</title>
     </head>
-        <body>
+    <body>
         <center><h1>{title_}</h1></center>
         <p><h2>Debugging</h2><br><br>
         <p>Rounds: {round_num_}</h2>
@@ -417,8 +418,7 @@ html_content = f"""
         <br><br>
         <a href="index.php">Run another match</a><br><br>
         &Copy; 2023 SlamSim
-        </body>
+    </body>
     </html>
     """
-
     return [html_content.encode('utf-8')]
