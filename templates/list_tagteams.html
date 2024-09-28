@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}List Tag Teams{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1>Tag Teams</h1>
+
+    <!-- Filter Form -->
+    <form method="GET" action="/list_tagteams" class="mb-4">
+        <!-- Status Filter -->
+        <div class="mb-3">
+            <label for="status" class="form-label">Filter by Status</label>
+            <select class="form-select" id="status" name="status">
+                <option value="">All</option>
+                <option value="active" {% if status_filter == 'active' %}selected{% endif %}>Active</option>
+                <option value="inactive" {% if status_filter == 'inactive' %}selected{% endif %}>Inactive</option>
+            </select>
+        </div>
+
+        <!-- Type Filter -->
+        <div class="mb-3">
+            <label for="type" class="form-label">Filter by Type</label>
+            <select class="form-select" id="type" name="type">
+                <option value="">All</option>
+                <option value="standard" {% if type_filter == 'standard' %}selected{% endif %}>Standard</option>
+                <option value="trios" {% if type_filter == 'trios' %}selected{% endif %}>Trios</option>
+            </select>
+        </div>
+
+        <!-- League Filter -->
+        <div class="mb-3">
+            <label for="league" class="form-label">Filter by League</label>
+            <select class="form-select" id="league" name="league">
+                <option value="">All</option>
+                <option value="None" {% if league_filter == 'None' %}selected{% endif %}>None</option>
+                {% for league in leagues %}
+                    <option value="{{ league.id }}" {% if league_filter == league.id %}selected{% endif %}>{{ league.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary">Filter</button>
+    </form>
+
+    <!-- Tag Teams List -->
+    <ul class="list-group">
+        {% for tagteam in tagteams %}
+            <li class="list-group-item">
+                <a href="/tagteam/{{ tagteam.id }}">{{ tagteam.name }}</a> 
+                ({{ tagteam.type | capitalize }}, {{ tagteam.status | capitalize }})
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

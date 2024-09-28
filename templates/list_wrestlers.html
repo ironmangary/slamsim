@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}List Wrestlers{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1>Wrestlers</h1>
+
+    <!-- Filter Form -->
+    <form method="GET" action="/list_wrestlers" class="mb-4">
+        <!-- Status Filter -->
+        <div class="mb-3">
+            <label for="status" class="form-label">Filter by Status</label>
+            <select class="form-select" id="status" name="status">
+                <option value="">All</option>
+                <option value="active" {% if status_filter == 'active' %}selected{% endif %}>Active</option>
+                <option value="injured" {% if status_filter == 'injured' %}selected{% endif %}>Injured</option>
+                <option value="suspended" {% if status_filter == 'suspended' %}selected{% endif %}>Suspended</option>
+                <option value="inactive" {% if status_filter == 'inactive' %}selected{% endif %}>Inactive</option>
+            </select>
+        </div>
+
+        <!-- League Filter -->
+        <div class="mb-3">
+            <label for="league" class="form-label">Filter by League</label>
+            <select class="form-select" id="league" name="league">
+                <option value="">All</option>
+                <option value="None" {% if league_filter == 'None' %}selected{% endif %}>None</option>
+                {% for league in leagues %}
+                    <option value="{{ league.id }}" {% if league_filter == league.id %}selected{% endif %}>{{ league.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary">Filter</button>
+    </form>
+
+    <!-- Wrestlers List -->
+    <ul class="list-group">
+        {% for wrestler in wrestlers %}
+            <li class="list-group-item">
+                <a href="/wrestler/{{ wrestler.id }}">{{ wrestler.name }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

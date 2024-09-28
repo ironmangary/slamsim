@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Venue</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <div class="container">
+      {% for category, message in messages %}
+        <div class="alert alert-{{ category }}">{{ message }}</div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+
+    <div class="container mt-5">
+        <h1>Create Venue</h1>
+        <form action="/create_venue" method="POST">
+            <!-- Name -->
+            <div class="mb-3">
+                <label for="name" class="form-label">Venue Name (required)</label>
+                <input type="text" class="form-control" id="name" name="name" required>
+            </div>
+            <!-- Location -->
+            <div class="mb-3">
+                <label for="location" class="form-label">Location (required)</label>
+                <input type="text" class="form-control" id="location" name="location" required>
+            </div>
+            <!-- Type -->
+            <div class="mb-3">
+                <label for="type" class="form-label">Type</label>
+                <select class="form-select" id="type" name="type">
+                    <option value="stadium">Stadium</option>
+                    <option value="arena">Arena</option>
+                    <option value="gymnasium">Gymnasium</option>
+                    <option value="field">Field</option>
+                    <option value="club">Club</option>
+                    <option value="backyard">Backyard</option>
+                </select>
+            </div>
+            <!-- Capacity -->
+            <div class="mb-3">
+                <label for="capacity" class="form-label">Capacity</label>
+                <input type="number" class="form-control" id="capacity" name="capacity" min="0">
+            </div>
+            <!-- Description -->
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <textarea class="form-control" id="description" name="description" rows="4"></textarea>
+            </div>
+            <!-- Submit Button -->
+            <button type="submit" class="btn btn-primary">Create Venue</button>
+        </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
