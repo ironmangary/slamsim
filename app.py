@@ -2,10 +2,10 @@ import os
 from flask import Flask, render_template, request, redirect, flash, url_for
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.utils import secure_filename
-from models import db, Wrestler, League, TagTeam
+from models import db, Wrestler, League, TagTeam, OtherStaff
 from utils.sanitize import sanitize_input, sanitize_limit_html, sanitize_number
 from utils.file_upload import save_image
-from utils.process_forms import process_wrestler_form, process_tagteam_form, process_league_form
+from utils.process_forms import process_wrestler_form, process_tagteam_form, process_league_form, process_staff_form
 
 # Flask app setup
 app = Flask(__name__)
@@ -136,21 +136,55 @@ def view_edit_tagteam(id):
 
     return render_template('view_edit_tagteam.html', tagteam=tagteam, leagues=leagues, wrestlers=wrestlers)
 
-@app.route('/create_faction', methods=['GET', 'POST'])
-def create_faction():
-    if request.method == 'POST':
-        # Similar structure for handling faction creation
-        flash('Faction created successfully!', 'success')
-        return redirect(url_for('home'))
-    return render_template('create_faction.html')
+# Other staff routes
 
 @app.route('/create_staff', methods=['GET', 'POST'])
 def create_staff():
-    if request.method == 'POST':
-        # Similar structure for handling staff creation
+    form = StaffForm()
+    leagues = League.query.all()  # Fetch available leagues
+
+    # Add choices for the league select field
+    form.league_id.choices = [(league.id, league.name) for league in leagues]
+
+    if form.validate_on_submit():
+        process_staff_form(form, is_new=True)
         flash('Staff member created successfully!', 'success')
-        return redirect(url_for('home'))
-    return render_template('create_staff.html')
+        return redirect(url_for('list_staff'))
+    return render_template('create_staff.html', form=form)
+
+@app.route('/staff/<int:staff_id>', methods=['GET', 'POST'])
+def view_edit_staff(staff_id):
+    staff = Staff.query.get_or_404(staff_id)
+    form = StaffForm(obj=staff)
+    
+    leagues = League.query.all()  # Fetch available leagues
+    form.league_id.choices = [(league.id, league.name) for league in leagues]
+    
+    if form.validate_on_submit():
+        process_staff_form(form, staff)
+        flash('Staff member updated successfully!', 'success')
+        return redirect(url_for('list_staff'))
+    return render_template('view_edit_staff.html', staff=staff, form=form)
+
+@app.route('/list_staff')
+def list_staff():
+    staff_members = Staff.query.all()
+    return render_template('list_staff.html', staff_members=staff_members)
+
+@app.route('/staff/<int:staff_id>', methods=['GET', 'POST'])
+def view_edit_staff(staff_id):
+    staff = Staff.query.get_or_404(staff_id)
+    form = StaffForm(obj=staff)
+    
+    leagues = League.query.all()  # Fetch available leagues
+    form.league_id.choices = [(league.id, league.name) for league in leagues]
+    
+    if form.validate_on_submit():
+        process_staff_form(form, staff)
+        flash('Staff member updated successfully!', 'success')
+        return redirect(url_for('list_staff'))
+    return render_template('view_edit_staff.html', staff=staff, form=form)
+
 
 # League routes
 

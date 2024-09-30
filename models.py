@@ -73,3 +73,14 @@ class TagTeam(db.Model):
     wrestler1 = db.relationship('Wrestler', foreign_keys=[wrestler1_id])
     wrestler2 = db.relationship('Wrestler', foreign_keys=[wrestler2_id])
     wrestler3 = db.relationship('Wrestler', foreign_keys=[wrestler3_id])
+    
+    # Other Staff
+    
+    class OtherStaff(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(60), nullable=False)
+    staff_type = db.Column(db.String(60), nullable=False)
+    bio = db.Column(db.Text)
+    league_id = db.Column(db.Integer, db.ForeignKey('league.id'), nullable=False)
+
+    league = db.relationship('League', backref=db.backref('staff', lazy=True))
