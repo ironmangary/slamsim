@@ -6,45 +6,61 @@
 
     <div class="container mt-5">
         <h1>Create League</h1>
-        <form action="/create_league" method="POST">
+
+        <!-- Update form tag to allow file uploads with enctype -->
+        <form action="{{ url_for('league_routes.create_league') }}" method="post" enctype="multipart/form-data">
+
             <!-- Name -->
             <div class="mb-3">
                 <label for="name" class="form-label">League Name (required)</label>
                 <input type="text" class="form-control" id="name" name="name" maxlength="100" required>
             </div>
+
             <!-- Abbreviation -->
             <div class="mb-3">
                 <label for="abbreviation" class="form-label">Abbreviation (required)</label>
                 <input type="text" class="form-control" id="abbreviation" name="abbreviation" maxlength="10" required>
             </div>
-            <!-- Status -->
+
+            <!-- Logo File Upload -->
             <div class="mb-3">
-                <label for="status" class="form-label">Status</label>
-                <select class="form-select" id="status" name="status">
-                    <option value="active">Active</option>
-                    <option value="inactive">Inactive</option>
-                </select>
+                <label for="logo" class="form-label">Upload Logo</label>
+                <input type="file" class="form-control" id="logo" name="logo" accept="image/*">
+                <small class="form-text text-muted">Supported formats: jpg, png, gif.</small>
             </div>
+
+            <!-- Status Radio Buttons -->
+            <div class="mb-3">
+                <label class="form-label">Status (required)</label><br>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="status" id="status_active" value="Active" required>
+                    <label class="form-check-label" for="status_active">Active</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="status" id="status_inactive" value="Inactive" required>
+                    <label class="form-check-label" for="status_inactive">Inactive</label>
+                </div>
+            </div>
+
             <!-- Headquarters -->
             <div class="mb-3">
                 <label for="headquarters" class="form-label">Headquarters</label>
                 <input type="text" class="form-control" id="headquarters" name="headquarters" maxlength="100">
             </div>
+
             <!-- Owner/President -->
             <div class="mb-3">
                 <label for="owner" class="form-label">Owner/President</label>
                 <input type="text" class="form-control" id="owner" name="owner" maxlength="60">
             </div>
-            <!-- Year Created -->
+
+            <!-- Description (Markdown Supported) -->
             <div class="mb-3">
-                <label for="year_created" class="form-label">Year Created</label>
-                <input type="number" class="form-control" id="year_created" name="year_created" min="1800" max="2099">
+                <label for="description" class="form-label">League Description</label>
+                <textarea class="form-control" id="description" name="description" rows="6"></textarea>
+                <small class="form-text text-muted">You can use Markdown for formatting.</small>
             </div>
-            <!-- Biography -->
-            <div class="mb-3">
-                <label for="description" class="form-label">Description</label>
-                <textarea class="form-control" id="description" name="description" rows="4"></textarea>
-            </div>
+
             <!-- Submit Button -->
             <button type="submit" class="btn btn-primary">Create League</button>
         </form>
