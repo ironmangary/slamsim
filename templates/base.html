@@ -16,18 +16,14 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
-                    <!-- Home Link -->
-                    <li class="nav-item">
-                        <a class="nav-link" href="/">Home</a>
-                    </li>
                     <!-- Leagues Dropdown -->
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="LeaguesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Leagues
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="LeaguesDropdown">
-                            <li><a class="dropdown-item" href="/leagues/list.html">List Leagues</a></li>
-                            <li><a class="dropdown-item" href="/league/new">Create New League</a></li>
+                        <li><a href="{{ url_for('league_routes.list_leagues') }}">List Your Leagues</a></li>
+                        <li><a href="{{ url_for('league_routes.create_league') }}">Create New League</a></li>
                         </ul>
                     </li>
                     <!-- More navigation items as needed -->

@@ -11,18 +11,15 @@
 <h2>Leagues</h2></p>
 <p>
     <ul>
-            <!-- Loop through the leagues passed from the home route -->
         {% for league in leagues %}
         <li>
-            <a href="{{ url_for('play_league', league_id=league.id) }}">
+            <a href="{{ url_for('league_routes.view_league', league_id=league.id) }}">
                 {{ league.name }}
             </a>
         </li>
         {% endfor %}
+        <li><a href="{{ url_for('league_routes.list_leagues') }}">List Your Leagues</a></li>
         <li><a href="{{ url_for('league_routes.create_league') }}">Create New League</a></li>
-
-<h2>Wrestlers</h2></p>
-<p>
-        
+    </ul>
 </body>
 </html>

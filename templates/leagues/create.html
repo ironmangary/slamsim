@@ -7,9 +7,10 @@
     <div class="container mt-5">
         <h1>Create League</h1>
 
-        <!-- Update form tag to allow file uploads with enctype -->
         <form action="{{ url_for('league_routes.create_league') }}" method="post" enctype="multipart/form-data">
 
+        {{ form.hidden_tag() }}
+        
             <!-- Name -->
             <div class="mb-3">
                 <label for="name" class="form-label">League Name (required)</label>

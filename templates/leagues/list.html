@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Leagues{% endblock %}
+
+{% block content %}
+    <h1>Leagues</h1>
+    <div>
+        <a href="{{ url_for('league_routes.list_leagues', filter='all') }}" class="btn {{ 'btn-primary' if filter_option == 'all' else 'btn-secondary' }}">All</a>
+        <a href="{{ url_for('league_routes.list_leagues', filter='active') }}" class="btn {{ 'btn-primary' if filter_option == 'active' else 'btn-secondary' }}">Active</a>
+        <a href="{{ url_for('league_routes.list_leagues', filter='inactive') }}" class="btn {{ 'btn-primary' if filter_option == 'inactive' else 'btn-secondary' }}">Inactive</a>
+    </div>
+    <ul>
+        {% for league in leagues %}
+            <li>
+                {{ league.name }} - {{ league.status }}
+                <a href="{{ url_for('league_routes.view_league', league_id=league.id) }}">View</a> |
+                <a href="{{ url_for('league_routes.edit_league', league_id=league.id) }}">Edit</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

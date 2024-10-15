@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block title %}Edit League{% endblock %}
+
+{% block content %}
+
+    <div class="container mt-5">
+        <h1>Edit League</h1>
+
+        <form action="{{ url_for('league_routes.edit_league', league_id=league.id) }}" method="post" enctype="multipart/form-data">
+
+
+        {{ form.hidden_tag() }}
+        
+            <!-- Name -->
+            <div class="mb-3">
+                <label for="name" class="form-label">League Name (required)</label>
+                <input type="text" class="form-control" id="name" name="name" maxlength="100" value="{{ league.name }}" required>
+            </div>
+
+            <!-- Abbreviation -->
+            <div class="mb-3">
+                <label for="abbreviation" class="form-label">Abbreviation (required)</label>
+                <input type="text" class="form-control" id="abbreviation" name="abbreviation" maxlength="10" value="{{ league.abbreviation }}" required>
+            </div>
+
+<!-- Logo File Upload -->
+<div class="mb-3">
+    <label for="logo" class="form-label">Upload Logo</label>
+    <input type="file" class="form-control" id="logo" name="logo" accept="image/*">
+    <small class="form-text text-muted">Supported formats: jpg, png, gif.</small>
+    {% if league.logo %}
+        <p>Current logo: {{ league.logo }}</p>
+    {% endif %}
+</div>
+
+<!-- Status Radio Buttons -->
+<div class="mb-3">
+    <label class="form-label">Status (required)</label><br>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="status" id="status_active" value="Active" {% if league.status == 'Active' %}checked{% endif %} required>
+        <label class="form-check-label" for="status_active">Active</label>
+    </div>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="status" id="status_inactive" value="Inactive" {% if league.status == 'Inactive' %}checked{% endif %} required>
+        <label class="form-check-label" for="status_inactive">Inactive</label>
+    </div>
+</div>
+
+            <!-- Headquarters -->
+            <div class="mb-3">
+                <label for="headquarters" class="form-label">Headquarters</label>
+                <input type="text" class="form-control" id="headquarters" name="headquarters" maxlength="100" value="{{ league.headquarters }}">
+            </div>
+
+            <!-- Owner/President -->
+            <div class="mb-3">
+                <label for="owner" class="form-label">Owner/President</label>
+                <input type="text" class="form-control" id="owner" name="owner" maxlength="60" value="{{ league.owner }}">
+            </div>
+
+            <!-- Description (Markdown Supported) -->
+            <div class="mb-3">
+                <label for="description" class="form-label">League Description</label>
+                <textarea class="form-control" id="description" name="description" rows="6" value="{{ league.description }}"></textarea>
+                <small class="form-text text-muted">You can use Markdown for formatting.</small>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn btn-primary">Save League</button>
+        </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+{% endblock %}
